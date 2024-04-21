@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelaf.org">
+    <head>
+        <meta charset ="UTF-8">
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <title>View Book</title>
+        <!-- Bootstrap StyleSheet CDN -->
+        <link href ="http://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity ="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0YzlztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container mt-4">
+            <!--Bootstrap card to organize book detail-->
+            <div class="card">
+                <div class="card-header"
+                <h3>Book Details</h3>
+
+            </div>
+            <div class="card-body">
+                <!---Thyme expression to disply the books details-->
+                <p><strong>ISBN:</strong><span th:text="${book.isbn}"></span></p>
+                <p><strong>Title:</strong><span th:text="${book.title}"></span></p>
+                <p><strong>Description:</strong><span th:text="${book.description}"></span></p>
+                <p><strong>Number of Pages:</strong><span th:text="${book.numOfPages}"></span></p>
+                <p><strong>Author</strong></p>
+                <ul th:each="author : ${book.getAuthors()}">
+                    <li th:text="${author}"></li>
+                </ul>
+                <!--Thymeleaf each directive to iteractive over book authors-->
+                <a href="/" class="btn btn-primary mt-3">Back to book list</a>
+            </div>
+            
+    </div>
+</body>
+</html>
