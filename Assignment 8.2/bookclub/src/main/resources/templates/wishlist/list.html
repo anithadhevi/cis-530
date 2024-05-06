@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset = "UTF-8">
+    <title>My Wishlist </title>
+    <!-- Bootstrap StyleSheet CDN -->
+    <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    crossorigin="anonymous">
+    <script src="javascript">
+        class HTTPclient
+        {
+            async get(url,params ="")
+            {
+                url = new URL(url);
+                url.search=new URLSearchParams(params).toString();
+                console.log(url.toString);
+                const res=await fetch(url.toString(),
+                {
+                    method: 'GET',
+                });
+                return res.json();
+            }
+        }
+        function buildTable(books)
+        {
+            let tableString = <table class="table"><tr><th>ISBN</th><th>Title</th><th>Functions</th></tr>;
+                for (let book of books)
+                {
+                    tableString=<tr><td>${book.isbn}</td><td>${book.title}</td><td><a href="#">Edit</a>|<a href="#">Delete</a></td></tr>
+                }
+                tableString += </table>
+                return tableString;
+                
+        }
+
+        const http = new HTTPclient();
+         http.get('http://localhost:8080/api/wishlist'). then(res => 
+         {
+            console.log(res);
+            document.getElementById("wishlist").innerHTML =buildTable(res);
+
+         }).catch(e=>
+        {
+            console.log(e);
+        })
+    
+    </script>
+</head>
+<body>
+    <div class="py-5 container" style="width:50%;">
+        <h2  class="text-center">My Wishlist</h2>
+        <br />
+        <p  class="text-center">
+            <a href = "/wishlist/new" th:href="@{/wishlist/new}" class="btn btn-outline-secondary text-center"> New Wishlist Item </a>
+        </p>
+
+        <div id="wishlist"></div>
+        <div class="table-responsive-md"></div>
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Functions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <!--Iterate ovwee wishlistnitem using th:each-->
+                <tr th:each ="item:${wishlist}">
+                    <td class="align-middle" th:text = "${item.isbn}">ISBN</td>
+                    <td class="align-middle" th:text="${item.title}">Title</td>
+                    <td>
+                        <a th:href = "@{/wishlist/new}" class="btn btn-link">Edit</a>|<a th:href = "@{/wishlist/new}" class="btn btn-link">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> 
+</body>
+</html>
