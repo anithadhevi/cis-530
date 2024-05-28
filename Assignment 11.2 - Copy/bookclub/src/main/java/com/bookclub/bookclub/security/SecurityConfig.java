@@ -26,8 +26,8 @@ public class SecurityConfig
           .roles("USER")
 
           .and()
-           .withUser("admin")
-           .password(encoder.encode("admin123"))
+           .withUser("testuser01")
+           .password(encoder.encode("password01"))
            .roles("USER", "ADMIN");
            
     }
